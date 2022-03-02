@@ -1,4 +1,5 @@
 set tags=./.tags;,.tags
+source ~/.vim/init/init-basic.vim
 call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -13,23 +14,47 @@ call plug#begin()
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
-
 " Multiple Plug commands can be written in a single line using | separators
 " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-default branch
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
-
-
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
-
+" 异步自动生成tags
 Plug 'https://github.com/ludovicchabant/vim-gutentags.git'
+
+" 异步编译运行
+Plug 'skywind3000/asyncrun.vim'
+" 代码错误检测
+Plug 'dense-analysis/ale'
+" git状态对比
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+Plug 'sgur/vim-textobj-parameter'
+
+" 颜色高亮
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" [,]快捷键补充
+Plug 'tpope/vim-unimpaired'
+
+Plug 'ycm-core/YouCompleteMe'
+
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+
+Plug 'justinmk/vim-dirvish'
+
+Plug 'diepm/vim-rest-console'
+
 
 " Initialize plugin system
 call plug#end()
@@ -53,3 +78,106 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
+
+" ===================== asyncrun ===========================
+" 自动打开 quickfix window ，高度为 6
+let g:asyncrun_open = 6
+
+" 任务结束时候响铃提醒
+let g:asyncrun_bell = 1
+
+" 设置 F10 打开/关闭 Quickfix 窗口
+nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+
+" 编译当前文件
+nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+nnoremap <silent> <F7> :AsyncRun bitbake bmcweb <cr>
+" 执行编译结果, raw表示输出不用匹配错误检测模版，直接原始输出到quickfix窗口
+nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+" 编译整个项目
+" nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
+nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
+nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
+" ===================== asyncrun end ===========================
+
+" ===================== ale ===========================
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++19'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+
+let g:ale_sign_error = "\ue009\ue009"
+hi! clear SpellBad
+hi! clear SpellCap
+hi! clear SpellRare
+hi! SpellBad gui=undercurl guisp=red
+hi! SpellCap gui=undercurl guisp=blue
+hi! SpellRare gui=undercurl guisp=magenta
+" ===================== ale end ===========================
+
+" ===================== signify ===========================
+" 强制显示侧边栏
+" set signcolumn=yes
+" ===================== signify end ===========================
+
+" ===================== youCompleteMe ===========================
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_strings=1
+let g:ycm_key_invoke_completion = '<c-z>'
+nnoremap gl :YcmCompleter GoToReferences<CR>
+nnoremap gc :YcmCompleter GoToCallers<CR>
+set completeopt=menu,menuone
+
+noremap <c-z> <NOP>
+
+let g:ycm_semantic_triggers =  {
+           \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+           \ 'cs,lua,javascript': ['re!\w{2}'],
+           \ }
+" ===================== youCompleteMe end ===========================
+
+" =======================LeaderF===================================
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<m-n>'
+noremap ,r :LeaderfMru<cr>
+noremap ,f :LeaderfFunction<cr>
+noremap ,b :LeaderfBuffer<cr>
+noremap ,t :LeaderfTag<cr>
+noremap ,l :LeaderfLine<cr>
+noremap ,a :<C-U><C-R>=printf("Leaderf! rg -e  %s -i", expand("<cword>"))<CR>
+
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+" =======================LeaderF end===================================
+" =======================vim-dirvish================================
+" :map <F8> :vertical wincmd f<CR>  wincmd:<c-w>
+" =======================vim-dirvish end============================
+" =======================vim-rest-console===========================
+let g:vrc_curl_opts = {
+  \ '--connect-timeout' : 10,
+  \ '-k': '',
+\}
+" =======================vim-rest-console end=======================
