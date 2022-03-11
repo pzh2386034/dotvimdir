@@ -1,5 +1,8 @@
 set tags=./.tags;,.tags
 source ~/.vim/init/init-basic.vim
+source ~/.vim/init/init-function.vim
+
+" source ~/.vim/init/init-plugins.vim
 call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -55,6 +58,19 @@ Plug 'justinmk/vim-dirvish'
 
 Plug 'diepm/vim-rest-console'
 
+Plug 'SirVer/ultisnips'
+
+Plug 'mfukar/robotframework-vim'
+
+
+Plug 'skywind3000/gutentags_plus'
+" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
+Plug 'skywind3000/vim-preview'
+
+" Git 支持
+Plug 'tpope/vim-fugitive'
+
+Plug 'Shougo/echodoc.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -74,7 +90,7 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
-" 检测 ~/.cache/tags 不存在就新建
+" 检测 ~/.cache/tags 不存就新建
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
@@ -149,6 +165,11 @@ let g:ycm_semantic_triggers =  {
            \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
            \ 'cs,lua,javascript': ['re!\w{2}'],
            \ }
+"----------------------------------------------------------------------
+" echodoc：搭配 YCM/deoplete 在底部显示函数参数
+"----------------------------------------------------------------------
+"	set noshowmode
+	let g:echodoc#enable_at_startup = 1
 " ===================== youCompleteMe end ===========================
 
 " =======================LeaderF===================================
@@ -158,9 +179,10 @@ noremap ,r :LeaderfMru<cr>
 noremap ,f :LeaderfFunction<cr>
 noremap ,b :LeaderfBuffer<cr>
 noremap ,t :LeaderfTag<cr>
-noremap ,l :LeaderfLine<cr>
-noremap ,a :<C-U><C-R>=printf("Leaderf! rg -e  %s -i", expand("<cword>"))<CR>
-
+noremap ,s :LeaderfLine<cr>
+noremap ,c :<C-U><C-R>=printf("Leaderf! rg -S -e %s -i", expand("<cword>"))<CR>
+noremap ,a :<C-U><C-R>=printf("Leaderf! rg -S -e  %s  %s",expand("<cword>"), Findroot(1))<CR>
+" :help :<cWORD>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -174,6 +196,37 @@ let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 " =======================LeaderF end===================================
 " =======================vim-dirvish================================
 " :map <F8> :vertical wincmd f<CR>  wincmd:<c-w>
+"----------------------------------------------------------------------
+" Dirvish 设置：自动排序并隐藏文件，同时定位到相关文件
+" 这个排序函数可以将目录排在前面，文件排在后面，并且按照字母顺序排序
+" 比默认的纯按照字母排序更友好点。
+"----------------------------------------------------------------------
+function! s:setup_dirvish()
+	if &buftype != 'nofile' && &filetype != 'dirvish'
+		return
+	endif
+	if has('nvim')
+		return
+	endif
+	" 取得光标所在行的文本（当前选中的文件名）
+	let text = getline('.')
+	if ! get(g:, 'dirvish_hide_visible', 0)
+		exec 'silent keeppatterns g@\v[\/]\.[^\/]+[\/]?$@d _'
+	endif
+	" 排序文件名
+	exec 'sort ,^.*[\/],'
+	let name = '^' . escape(text, '.*[]~\') . '[/*|@=|\\*]\=\%($\|\s\+\)'
+	" 定位到之前光标处的文件
+	call search(name, 'wc')
+	noremap <silent><buffer> ~ :Dirvish ~<cr>
+	noremap <buffer> % :e %
+endfunc
+
+augroup MyPluginSetup
+	autocmd!
+	autocmd FileType dirvish call s:setup_dirvish()
+augroup END
+
 " =======================vim-dirvish end============================
 " =======================vim-rest-console===========================
 let g:vrc_curl_opts = {
@@ -181,3 +234,18 @@ let g:vrc_curl_opts = {
   \ '-k': '',
 \}
 " =======================vim-rest-console end=======================
+inoremap <c-b> <home>
+inoremap <c-e> <end>
+inoremap <c-d> <del>
+inoremap <c-_> <c-k>
+
+cnoremap <c-h> <left>
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+cnoremap <c-l> <right>
+cnoremap <c-b> <home>
+cnoremap <c-e> <end>
+cnoremap <c-f> <c-d>
+cnoremap <c-b> <left>
+cnoremap <c-d> <del>
+cnoremap <c-_> <c-k>

@@ -16,7 +16,14 @@
 "
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
-nnoremap ,h :set hlsearch!<CR>
+nnoremap ,e :set hlsearch!<CR>
+nnoremap ,h <C-W>h
+nnoremap ,l <C-W>l
+nnoremap ,j <C-W>j
+nnoremap ,k <C-W>k
+
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
 
 " 禁用 vi 兼容模式
 set nocompatible
@@ -51,7 +58,7 @@ set ruler
 "----------------------------------------------------------------------
 
 " 搜索时忽略大小写
-set ignorecase
+" set ignorecase
 
 " 智能搜索大小写判断，默认忽略大小写，除非搜索内容包含大写字母
 set smartcase
