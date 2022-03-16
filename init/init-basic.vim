@@ -14,6 +14,12 @@
 " 基础设置
 "----------------------------------------------------------------------
 "
+" custom mapping
+nnoremap #2 : w<CR>
+nnoremap #3 : ggdG
+nnoremap #4 :gg"+yG
+set cmdheight=2
+
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 nnoremap ,e :set hlsearch!<CR>

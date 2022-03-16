@@ -44,7 +44,7 @@ function! Findroot(echo) abort
   \])
   let l:dir = Goup(l:dir, l:patterns)
   if empty(l:dir)
-    return
+    return ""
   endif
   if get(g:, 'findroot_not_for_subdir', 1) && stridx(tolower(fnamemodify(getcwd(), ':gs!\!/!')), tolower(l:dir)) == 0
     return

@@ -72,6 +72,11 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'Shougo/echodoc.vim'
 
+" vim snippets
+Plug 'honza/vim-snippets'
+
+Plug 'kergoth/vim-bitbake'
+
 " Initialize plugin system
 call plug#end()
 
