@@ -75,3 +75,29 @@ python3 install.py
 * :setlocal tags+=~/.cache/tags/*
 
 * :sh--open ssh session within vim and exit to ret
+
+## screen
+
+* :tabc--关闭当前tab; :tabo--关闭所有其它tab; :tabs--查看所有打开tab; :tabp; :tabn
+
+## Git
+
+* :Gvdiffsplit--分屏显示本文件差异(可用于解决冲突); :G difftool -y--分屏显示所有文件差异
+
+    * dp,do:stage/upstage trunk
+
+`在冲突中使用Gvdiffsplit出现3个屏幕，]c, d2o, d3o`
+
+* :G log
+    
+    * coo:签出到当前commit; o:分屏打开commit(git show commit); <Enter>:打开commit
+
+* Gread, Gwrite master:filename
+
+* :G
+    
+    * a--checkout 当前文件; I/P--按hunk stage本文件; [c,]c--按hunk浏览; [m,]m--按文件浏览; C--查看当前文件上一次commit
+    * i--跳到next file/hunk,自动展开hunk浏览
+    * cc--commit; ca/ce--amend last comm且编辑/不编辑; cw--改写上次comm; cvc/cva--comm显示所有待提交内容; cf/cF--提交(--fixup)/并且rebase; cs/cS--提交(--squash)/并且rebase
+    * czz--git stash; czp/P--pop stash/不保留index
+    * rebase:ri--交互式rebase; rr--继续rebase; ra--abort rebase; re--编辑base todo list
