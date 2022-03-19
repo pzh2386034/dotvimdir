@@ -101,3 +101,4 @@ python3 install.py
     * cc--commit; ca/ce--amend last comm且编辑/不编辑; cw--改写上次comm; cvc/cva--comm显示所有待提交内容; cf/cF--提交(--fixup)/并且rebase; cs/cS--提交(--squash)/并且rebase
     * czz--git stash; czp/P--pop stash/不保留index
     * rebase:ri--交互式rebase; rr--继续rebase; ra--abort rebase; re--编辑base todo list
+    * 

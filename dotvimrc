@@ -18,7 +18,7 @@ call plug#begin()
 Plug 'junegunn/vim-easy-align'
 
 " Multiple Plug commands can be written in a single line using | separators
-" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " Using a non-default branch
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
@@ -58,8 +58,6 @@ Plug 'justinmk/vim-dirvish'
 
 Plug 'diepm/vim-rest-console'
 
-Plug 'SirVer/ultisnips'
-
 Plug 'mfukar/robotframework-vim'
 
 
@@ -72,10 +70,10 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'Shougo/echodoc.vim'
 
-" vim snippets
-Plug 'honza/vim-snippets'
 
 Plug 'kergoth/vim-bitbake'
+
+Plug 'itchyny/calendar.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -119,7 +117,7 @@ nnoremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_
 " nnoremap <silent> <F7> :AsyncRun -cwd=<root> make <cr>
 nnoremap <silent> <F8> :AsyncRun -cwd=<root> -raw make run <cr>
 nnoremap <silent> <F6> :AsyncRun -cwd=<root> -raw make test <cr>
-" ===================== asyncrun end ===========================
+
 
 " ===================== ale ===========================
 let g:ale_sign_error = '>>'
