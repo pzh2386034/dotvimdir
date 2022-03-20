@@ -75,9 +75,18 @@ Plug 'kergoth/vim-bitbake'
 
 Plug 'itchyny/calendar.vim'
 
+Plug 'jceb/vim-orgmode'
+
+" cs, ysiw; yss:entity line
+Plug 'tpope/vim-surround'
+
+Plug 'tpope/vim-commentary'
+
 " Initialize plugin system
 call plug#end()
-
+autocmd FileType apache setlocal commentstring=#\ %s
+autocmd FileType java,c,cpp,hpp,h set commentstring=//\ %s
+autocmd FileType python,shell,coffee set commentstring=#\ %s
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
@@ -237,6 +246,22 @@ let g:vrc_curl_opts = {
   \ '-k': '',
 \}
 " =======================vim-rest-console end=======================
+" =======================ultisnips===========================
+
+let g:UltiSnipsExpandTrigger="<nop>"
+let g:ulti_expand_or_jump_res = 0
+function! <SID>ExpandSnippetOrReturn()
+  let snippet = UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+    return snippet
+  else
+    return "\<CR>"
+  endif
+endfunction
+inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
+" =======================ultisnips end=======================
+" =======================vim-org===========================
+" =======================vim-org end=======================
 inoremap <c-b> <home>
 inoremap <c-e> <end>
 inoremap <c-d> <del>
