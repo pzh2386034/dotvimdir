@@ -81,6 +81,8 @@ Plug 'jceb/vim-orgmode'
 Plug 'tpope/vim-surround'
 
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-speeddating'
+Plug 'suliveevil/utl.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -261,7 +263,11 @@ endfunction
 inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 " =======================ultisnips end=======================
 " =======================vim-org===========================
+let g:org_agenda_files=['~/org/*.org']
+
 " =======================vim-org end=======================
+noremap gt :G<cr>
+" autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>
 inoremap <c-e> <end>
 inoremap <c-d> <del>

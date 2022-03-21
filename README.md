@@ -96,9 +96,32 @@ python3 install.py
 
 * :G
     
-    * a--checkout 当前文件; I/P--按hunk stage本文件; [c,]c--按hunk浏览; [m,]m--按文件浏览; C--查看当前文件上一次commit
+    * X--checkout 当前文件; I/P--按hunk stage本文件; [c,]c--按hunk浏览; [m,]m--按文件浏览; C--查看当前文件上一次commit
     * i--跳到next file/hunk,自动展开hunk浏览
     * cc--commit; ca/ce--amend last comm且编辑/不编辑; cw--改写上次comm; cvc/cva--comm显示所有待提交内容; cf/cF--提交(--fixup)/并且rebase; cs/cS--提交(--squash)/并且rebase
     * czz--git stash; czp/P--pop stash/不保留index
     * rebase:ri--交互式rebase; rr--继续rebase; ra--abort rebase; re--编辑base todo list
-    * 
+
+## org-mode
+
+* <leader>hn/N--创建同级标题
+* m{/}--标题上下移动; m[[/]]--subtree上下移动
+* <</>>--标题级别增减; <ar/>ar--subtree级别增减
+* <leader>caT--显示TODO列表; <leader>caA--显示日程表
+* <leader>ct--TODO状态循环; <leader>d--快速创建TODO标签
+
+### checkbox
+
+* <leader>cc--切换checkbox entry状态; <leader>cn/N--新增checkbox entry
+
+### tags
+
+* <leader>st--新增tag; <leader>gt--搜索tag
+
+### hylinks(need install suliveevil/utl.vim)
+
+* gl--goto link; gyl--yank link; gil--insert new link; gn/go--next/previous link
+
+### timestamp
+
+* <c-x>--按年/月/日修改1; <leader>sa/i--插入日期/inactive 
