@@ -28,6 +28,14 @@ nnoremap ,l <C-W>l
 nnoremap ,j <C-W>j
 nnoremap ,k <C-W>k
 
+nnoremap rl :vertical resize -10<CR>
+nnoremap rh :vertical resize +10<CR>
+nnoremap rk :resize +10<CR>
+nnoremap rj :resize -10<CR>
+" 另起一行粘贴
+nnoremap ,p :pu<CR>
+nnoremap ,P :pu!<CR>
+
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
 
