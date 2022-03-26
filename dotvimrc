@@ -14,6 +14,11 @@ call plug#begin()
 
 " Make sure you use single quotes
 
+" mattn/emmet-vim " html 代码插件
+" othree/html5.vim; hail2u/vim-css3-syntax; ap/vim-css-color;
+" pangloss/vim-javascript; maksimr/vim-jsbeautify
+" https://github.com/FengShangWuQi/to-vim-tmux-zsh " vim+tmux
+" fzf.vim, yuki-yano/fzf-preview.vim
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
@@ -84,6 +89,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-speeddating'
 Plug 'suliveevil/utl.vim'
 
+Plug 'preservim/nerdcommenter'
+
+Plug 'airblade/vim-gitgutter'
+
+Plug 'tpope/vim-repeat'
+
 " Initialize plugin system
 call plug#end()
 autocmd FileType apache setlocal commentstring=#\ %s
@@ -91,6 +102,9 @@ autocmd FileType java,c,cpp,hpp,h set commentstring=//\ %s
 autocmd FileType python,shell,coffee set commentstring=#\ %s
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+
+
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
@@ -196,6 +210,7 @@ noremap ,t :LeaderfTag<cr>
 noremap ,s :LeaderfLine<cr>
 noremap ,c :<C-U><C-R>=printf("Leaderf! rg -S -e %s -i", expand("<cword>"))<CR>
 noremap ,a :<C-U><C-R>=printf("Leaderf! rg -S -e  %s  %s",expand("<cword>"), Findroot(1))<CR>
+noremap ,o :<C-U><C-R>=printf("Leaderf! rg -S  ~/org -e %s",expand("<cword>"))<CR>
 " :help :<cWORD>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
@@ -266,6 +281,10 @@ inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "
 let g:org_agenda_files=['~/org/*.org']
 
 " =======================vim-org end=======================
+" =======================vim-gitgutter===========================
+command! Gqf GitGutterQuickFix | copen
+noremap  guz :GitGutterFold<CR>
+" =======================vim-gitgutter end=======================
 noremap gt :G<cr>
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>

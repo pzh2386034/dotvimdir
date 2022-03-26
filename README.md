@@ -1,9 +1,18 @@
 # Requirements
 
+## Macos
+
+```
+brew install vim
+echo "alias vim="/usr/local/bin/vim""
+brew install go cmake npm llvm clang ripgrep
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+```
+
 ## YouCompleteMe
 
 ```
-python3 install.py --clangd-completer #only support c/c++ complete(--clang-completer for all)
+python3 install.py [--system-libclang] --clang-completer #only support c/c++ complete(--all for all)
 cd /ycm/pluggin/dir
 python3 install.py
 ```
@@ -125,3 +134,28 @@ python3 install.py
 ### timestamp
 
 * <c-x>--按年/月/日修改1; <leader>sa/i--插入日期/inactive 
+
+## nerdcommenter 代码注释
+
+* ,c<space>--toggle注释; ,cc--注释; ,cm--只用一组符号注释; ,aA/$--在行尾添加注释; ,cs--块注释; ,ca--切换//和/**/; ,cu取消注释
+
+## fzf 
+
+### ubuntu install
+```
+sudo apt update
+sudo apt install snapd
+sudo snap install fzf-unofficial-18-04 --edge
+sudo dpkg -i bat_0.20.0_amd64.deb
+```
+
+### macos install
+```
+brew install fzf
+
+# To install useful key bindings and fuzzy completion:
+$(brew --prefix)/opt/fzf/install
+brew install bat
+```
+* fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
+
