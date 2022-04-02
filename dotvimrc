@@ -1,7 +1,6 @@
 set tags=./.tags;,.tags
 source ~/.vim/init/init-basic.vim
 source ~/.vim/init/init-function.vim
-
 " source ~/.vim/init/init-plugins.vim
 call plug#begin()
 " The default plugin directory will be as follows:
@@ -94,7 +93,12 @@ Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'tpope/vim-repeat'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
+Plug 'mhinz/vim-startify'
+Plug 'pangloss/vim-javascript' "; maksimr/vim-jsbeautify
+" Plug 'christoomey/vim-tmux-navigator' "vim tmux导航
 " Initialize plugin system
 call plug#end()
 autocmd FileType apache setlocal commentstring=#\ %s
@@ -285,6 +289,99 @@ let g:org_agenda_files=['~/org/*.org']
 command! Gqf GitGutterQuickFix | copen
 noremap  guz :GitGutterFold<CR>
 " =======================vim-gitgutter end=======================
+" =======================fzf===========================
+let g:fzf_buffers_jump = 1
+let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_tags_command = 'ctags -R'
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+ " v:oldfiles and open buffers
+noremap ff :FzfFiles<cr>
+noremap fF :FzfFiles!<cr>
+imap <c-x><c-f> :FzfHistory<cr>
+" search history
+noremap f/ :FzfHistory/<cr>
+" command history
+noremap f; :FzfHistory:<cr>
+noremap fb :FzfBuffers<cr>
+" search lines in all buffers
+noremap fbl :FzfLines<cr> 
+" search lines in current buffers
+noremap fl :FzfBLines<cr>
+noremap fa :FzfMarks<cr>
+noremap fw :FzfWindows<cr>
+noremap fs :FzfSnippets<cr>
+noremap fg :FzfCommits<cr>
+noremap fc :FzfCommands<cr>
+noremap fh :FzfHelptags<cr>
+noremap fm :FzfMaps<cr>
+
+
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 1,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+
+" Mapping selecting mappings
+ " Insert mode completion
+ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
+   \ 'prefix': '^.*$',
+   \ 'source': 'rg -n ^ --color always',
+   \ 'options': '--ansi --delimiter : --nth 3..',
+   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+
+function! s:make_sentence(lines)
+      return substitute(join(a:lines), '^.', '\=toupper(submatch(0))', '').'.'
+  endfunction
+" insert mode word search and complete
+  inoremap <expr> <c-x><c-s> fzf#vim#complete({
+    \ 'source':  'cat /usr/share/dict/words',
+    \ 'reducer': function('<sid>make_sentence'),
+    \ 'options': '--multi --reverse --margin 15%,0',
+    \ 'left':    20})
+
+function! s:current_dir()
+  return expand('%:p:h')
+endfunction
+
+"command! -bang -nargs=* Rg
+  "\ call fzf#vim#grep(
+  "\   'rg --column --line-number --no-heading --color=always  --smart-case  '.shellescape(<q-args>), 1,
+  "\   <bang>0 ? fzf#vim#with_preview('right:60%')
+  "\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  "\   <bang>0)
+
+
+ command! -bang -nargs=* Rg
+ \ call fzf#vim#grep(
+ \   "rg --column --line-number  --no-heading  --color=always  --smart-case ".shellescape(<q-args>),
+ \   1,
+ \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:60%')
+ \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+ \   <bang>0
+ \ )
+
+ command! -bang -nargs=* Rgorg
+ \ call fzf#vim#grep(
+ \   "rg --column --line-number  --no-heading  --color=always  --smart-case ".shellescape(<q-args>)." ~/org",
+ \   1,
+ \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:60%')
+ \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:60%', '?'),
+ \   <bang>0
+ \ )
+ "command! -bang -nargs=* Rg
+   "\ call fzf#vim#grep("rg  --column --line-number --no-heading  --color=always  --smart-case ~/org ".shellescape(<q-args>), 1,
+   "\   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+
+nmap ga :execute "Rg " . '\b' . expand('<cword>') . '\b'<cr>
+"noremap fc :<C-U><C-R>=printf("Leaderf! rg -S -e %s -i", expand("<cword>"))<CR>
+"noremap fa :<C-U><C-R>=printf("Leaderf! rg -S -e  %s  %s",expand("<cword>"), Findroot(1))<CR>
+
+noremap fo :<C-U><C-R>=printf("Rgorg   %s ",expand("<cword>"))<CR>
+noremap ,o :<C-U><C-R>=printf("Rgorg!  %s ",expand("<cword>"))<CR>
+" source ~/.vim/init/init_fzf.vim
+"=======================fzf end=======================
 noremap gt :G<cr>
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>

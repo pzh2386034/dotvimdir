@@ -70,6 +70,7 @@ python3 install.py
 
 * diw--delete word; di"--del content in ""; da'-- del content in ''; ci([{:del content in () and insert; ya)/]/}:copy()/[]/{}content 
 
+* <c-r> "--yank in insert mode
 
 ## register
 
