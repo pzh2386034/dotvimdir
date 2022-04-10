@@ -30,24 +30,15 @@ function! Findroot(echo) abort
   let l:dir = escape(fnamemodify(l:bufname, ':p:h:gs!\!/!:gs!//!/!'), ' ')
   let l:patterns = get(g:, 'findroot_patterns', [
   \  '.git/',
-  \  '.svn/',
-  \  '.hg/',
-  \  '.bzr/',
-  \  '.gitignore',
-  \  'Rakefile',
-  \  'pom.xml',
-  \  'project.clj',
-  \  'package.json',
   \  'manifest.json',
-  \  '*.csproj',
-  \  '*.sln',
+  \  '.root'
   \])
   let l:dir = Goup(l:dir, l:patterns)
   if empty(l:dir)
     return ""
   endif
   if get(g:, 'findroot_not_for_subdir', 1) && stridx(tolower(fnamemodify(getcwd(), ':gs!\!/!')), tolower(l:dir)) == 0
-    return
+    return ""
   endif
   " exe 'lcd' l:dir
   if a:echo

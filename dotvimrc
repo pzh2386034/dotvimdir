@@ -205,6 +205,8 @@ let g:ycm_semantic_triggers =  {
 " ===================== youCompleteMe end ===========================
 
 " =======================LeaderF===================================
+let g:findroot_not_for_subdir = 0 " for findRoot
+
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
 noremap ,r :LeaderfMru<cr>
@@ -309,7 +311,7 @@ noremap fb :FzfBuffers<cr>
 noremap fbl :FzfLines<cr> 
 " search lines in current buffers
 noremap fl :FzfBLines<cr>
-noremap fa :FzfMarks<cr>
+noremap fr :FzfMarks<cr>
 noremap fw :FzfWindows<cr>
 noremap fs :FzfSnippets<cr>
 noremap fg :FzfCommits<cr>
@@ -352,15 +354,29 @@ endfunction
   "\           : fzf#vim#with_preview('right:50%:hidden', '?'),
   "\   <bang>0)
 
+"noremap ,a :<C-U><C-R>=printf("Leaderf! rg -S -e  %s  %s",expand("<cword>"), Findroot(1))<CR>
+function! RipgrepFzfself(query, fullscreen)
+    let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case  %s %s'
+    if &filetype ==# 'c' || &filetype ==# 'cpp'
+        let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -g '.'!test'.' -tcpp -tc %s %s'
+    endif
+    let initial_command = printf(command_fmt, shellescape(a:query), Findroot(1))
+    echom initial_command
+    call fzf#vim#grep(
+    \   initial_command,
+    \   1,
+    \   a:fullscreen ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:70%')
+    \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+    \   a:fullscreen
+    \ )
+endfunction
+" /opt/nvme/zeuspan/openbmc/build/workspace/sources/phosphor-psu-software-manager 
 
- command! -bang -nargs=* Rg
- \ call fzf#vim#grep(
- \   "rg --column --line-number  --no-heading  --color=always  --smart-case ".shellescape(<q-args>),
- \   1,
- \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:60%')
- \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
- \   <bang>0
- \ )
+command! -bang -nargs=*  Srg call RipgrepFzfself(<q-args>, <bang>0)
+
+noremap fA :<C-U><C-R>=printf("Srg  %s",expand("<cword>"))<CR>
+noremap fa :<C-U><C-R>=printf("Srg!  %s",expand("<cword>"))<CR>
+"noremap ft :<C-U><C-R>=printf("Srg!  %s",expand("<cword>"))<CR>
 
  command! -bang -nargs=* Rgorg
  \ call fzf#vim#grep(
@@ -370,16 +386,11 @@ endfunction
  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:60%', '?'),
  \   <bang>0
  \ )
- "command! -bang -nargs=* Rg
-   "\ call fzf#vim#grep("rg  --column --line-number --no-heading  --color=always  --smart-case ~/org ".shellescape(<q-args>), 1,
-   "\   fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 nmap ga :execute "Rg " . '\b' . expand('<cword>') . '\b'<cr>
 "noremap fc :<C-U><C-R>=printf("Leaderf! rg -S -e %s -i", expand("<cword>"))<CR>
-"noremap fa :<C-U><C-R>=printf("Leaderf! rg -S -e  %s  %s",expand("<cword>"), Findroot(1))<CR>
-
-noremap fo :<C-U><C-R>=printf("Rgorg   %s ",expand("<cword>"))<CR>
-noremap ,o :<C-U><C-R>=printf("Rgorg!  %s ",expand("<cword>"))<CR>
+noremap fo :<C-U><C-R>=printf("Rgorg   %s",expand("<cword>"))<CR>
+noremap ,o :<C-U><C-R>=printf("Rgorg!  %s",expand("<cword>"))<CR>
 " source ~/.vim/init/init_fzf.vim
 "=======================fzf end=======================
 noremap gt :G<cr>

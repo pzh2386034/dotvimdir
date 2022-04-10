@@ -58,3 +58,14 @@ command! CSharpimacOSTypes :call fzf#vim#grep(s:rg_csharp_macos_type_command, 1,
   "let query = jmacs#util#get_selected_text()
   "call fzf#vim#ag(query, {'dir': dir})
 "endfunction
+"function! RipgrepFzfc(query, fullscreen)
+  "let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  "let initial_command = printf(command_fmt, shellescape(a:query))
+  "let reload_command = printf(command_fmt, '{q}')
+  "let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  "echom initial_command
+  "echom reload_command
+  "echom spec
+  "call fzf#vim#grep(initial_command, 1, a:fullscreen ? fzf#vim#with_preview(spec, 'right:70%'):
+    "\ fzf#vim#with_preview(spec, 'right:50%:hidden', '?'), a:fullscreen)
+"endfunction
