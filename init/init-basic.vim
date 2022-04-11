@@ -21,6 +21,7 @@ nnoremap #4 :gg"+yG
 set cmdheight=2
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+nnoremap ,<space> i<space><esc>
 
 nnoremap ,e :set hlsearch!<CR>
 nnoremap ,h <C-W>h
