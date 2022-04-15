@@ -128,6 +128,17 @@ if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
 
+function! Bitbake_compile()
+    let command_fmt = 'bitbake %s'
+    let initial_command = Findroot(1)
+    let  module = escape(fnamemodify(initial_command, ':t'), ' ')
+	let command = printf(command_fmt, module)
+	return command
+endfunc
+" command! -bang -nargs=*  Srg call RipgrepFzfself(<q-args>, <bang>0)
+
+noremap cc :<C-U><C-R>=printf("AsyncRun %s", Bitbake_compile())<CR>
+noremap cC :<C-U><C-R>=printf("AsyncRun!  %s", Bitbake_compile())<CR>
 " ===================== asyncrun ===========================
 " 自动打开 quickfix window ，高度为 6
 let g:asyncrun_open = 6
@@ -136,7 +147,7 @@ let g:asyncrun_open = 6
 let g:asyncrun_bell = 1
 
 " 设置 F10 打开/关闭 Quickfix 窗口
-nnoremap <F10> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap co :call asyncrun#quickfix_toggle(6)<cr>
 
 " 编译当前文件
 nnoremap <silent> <F9> :AsyncRun gcc -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
@@ -321,11 +332,8 @@ noremap fh :FzfHelptags<cr>
 noremap fm :FzfMaps<cr>
 
 
-command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 1,
-  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
+noremap fl :<C-U><C-R>=printf("FzfBLines %s",expand("<cword>"))<CR>
 " Mapping selecting mappings
  " Insert mode completion
  inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
@@ -344,9 +352,6 @@ function! s:make_sentence(lines)
     \ 'options': '--multi --reverse --margin 15%,0',
     \ 'left':    20})
 
-function! s:current_dir()
-  return expand('%:p:h')
-endfunction
 
 "command! -bang -nargs=* Rg
   "\ call fzf#vim#grep(
