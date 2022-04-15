@@ -122,6 +122,7 @@ let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
 let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
+" ctags -R  --c++-kinds=+px --fields=+niazS --extra=+q --c-kinds=+px
 " 检测 ~/.cache/tags 不存就新建
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
