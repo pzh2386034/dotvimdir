@@ -22,6 +22,7 @@ set cmdheight=2
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 nnoremap ,<space> i<space><esc>
+set paste
 
 nnoremap ,e :set hlsearch!<CR>
 nnoremap ,h <C-W>h
@@ -56,7 +57,7 @@ set cindent
 set winaltkeys=no
 
 " 关闭自动换行
-set nowrap
+set wrap
 
 " 打开功能键超时检测（终端下功能键为一串 ESC 开头的字符串）
 set ttimeout
