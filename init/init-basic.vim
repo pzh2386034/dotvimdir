@@ -22,6 +22,7 @@ set cmdheight=2
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 nnoremap ,<space> i<space><esc>
+let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
 
 nnoremap ,e :set hlsearch!<CR>
 nnoremap ,h <C-W>h
