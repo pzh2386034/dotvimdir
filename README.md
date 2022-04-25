@@ -69,6 +69,7 @@ python3 install.py
 ## quick fix(:h text-objects)
 
 * diw--delete word; di"--del content in ""; da'-- del content in ''; ci([{:del content in () and insert; ya)/]/}:copy()/[]/{}content 
+* cs"'--修改"->'; ds"--删除双引号; ysiw"--给单词加""; yss"--给整行加"; 
 
 * <c-r> "--yank in insert mode
 
@@ -146,7 +147,8 @@ python3 install.py
 ```
 sudo apt update
 sudo apt install snapd
-sudo snap install fzf-unofficial-18-04 --edge
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 sudo dpkg -i bat_0.20.0_amd64.deb
 ```
 

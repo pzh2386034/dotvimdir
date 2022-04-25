@@ -377,6 +377,10 @@ function! RipgrepFzfself(query, fullscreen)
     \ )
 endfunction
 " /opt/nvme/zeuspan/openbmc/build/workspace/sources/phosphor-psu-software-manager 
+" noremap ct :<C-U><C-R>=printf("call Load_tag('%s')" , expand("<cword>"))<CR>
+command  -nargs=*  Searchtags call Load_tag(<q-args>)
+noremap ct :<C-U><C-R>=printf("Searchtags %s" , expand("<cword>"))<CR>
+" ===================== tag===========================
 
 command! -bang -nargs=*  Srg call RipgrepFzfself(<q-args>, <bang>0)
 

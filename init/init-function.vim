@@ -46,3 +46,24 @@ function! Findroot(echo) abort
   endif
   return l:dir
 endfunction
+" ===================== 自动搜索加载tag =====================
+"function Compile_and_run(game, major, minor)
+    "execute '!_compile' shellescape(a:game) shellescape(a:major) shellescape(a:minor)
+"endfunction
+function! Load_tag(word)
+    let command_fmt = 'setlocal tags+=%s'
+	let search_fmt = 'rg --files  ~/.cache/tags |rg %s'
+	let searchCmm = printf(search_fmt, a:word)
+    let files = systemlist(searchCmm)
+	for tagname in files
+		let choice = confirm(tagname, "&y\n&n\n&c")
+		if choice == 1
+			let comm = printf(command_fmt, tagname)	
+			execute comm
+		elseif choice == 2
+			continue
+		else
+			break
+		endif
+	endfor
+endfunc
