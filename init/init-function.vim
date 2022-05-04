@@ -52,7 +52,7 @@ endfunction
 "endfunction
 function! Load_tag(word)
     let command_fmt = 'setlocal tags+=%s'
-	let search_fmt = 'rg --files  ~/.cache/tags |rg %s'
+	let search_fmt = 'rg --files  ~/.cache/tags |rg -i %s'
 	let searchCmm = printf(search_fmt, a:word)
     let files = systemlist(searchCmm)
 	for tagname in files
