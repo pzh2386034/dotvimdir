@@ -26,6 +26,14 @@ let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
 set paste
 vnoremap <C-c> "*y
 nnoremap ,v    "*p
+" <C-R>--Ctrl-R;
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
+nnoremap * :keepjumps normal! mi*`i<CR>
+nnoremap # :keepjumps normal! mi#`i<CR>
+nmap <silent> <C-L> <C-L>:nohlsearch<CR>:match<CR>:diffupdate<CR>
+" <left><left><left>-->把光标左移到//中间
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 nnoremap ,e :set hlsearch!<CR>
 nnoremap ,h <C-W>h
