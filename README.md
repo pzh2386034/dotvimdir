@@ -5,9 +5,6 @@
 ```
 brew install vim
 echo "alias vim="/usr/local/bin/vim""
-brew install go cmake npm llvm clang ripgrep gcc diff-so-fancy
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-brew install cmake go ripgrep npm
 ```
 
 ## YouCompleteMe
@@ -155,6 +152,7 @@ sudo apt install snapd
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 sudo dpkg -i bat_0.20.0_amd64.deb
+chsh -s $(which zsh)
 ```
 
 ### macos install
