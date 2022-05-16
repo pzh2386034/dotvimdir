@@ -304,6 +304,8 @@ command! Gqf GitGutterQuickFix | copen
 noremap  guz :GitGutterFold<CR>
 " =======================vim-gitgutter end=======================
 " =======================fzf===========================
+set rtp+=/opt/homebrew/opt/fzf
+
 let g:fzf_buffers_jump = 1
 let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
 let g:fzf_command_prefix = 'Fzf'
