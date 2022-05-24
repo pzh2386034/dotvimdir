@@ -20,6 +20,9 @@ call plug#begin()
 " fzf.vim, yuki-yano/fzf-preview.vim
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
+Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+Plug 'rhysd/vim-clang-format'
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -403,6 +406,21 @@ noremap fo :<C-U><C-R>=printf("Rgorg   %s",expand("<cword>"))<CR>
 noremap ,o :<C-U><C-R>=printf("Rgorg!  %s",expand("<cword>"))<CR>
 " source ~/.vim/init/init_fzf.vim
 "=======================fzf end=======================
+"=======================vim-clang-format start=======================
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
+"=======================vim-clang-format end=======================
 noremap gt :G<cr>
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>
