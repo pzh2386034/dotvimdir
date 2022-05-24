@@ -5,8 +5,6 @@
 ```
 brew install vim
 echo "alias vim="/usr/local/bin/vim""
-brew install go cmake npm llvm clang ripgrep
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 ```
 
 ## YouCompleteMe
@@ -61,6 +59,10 @@ python3 install.py
 * c-]--jump to tag def; c-w ](g c-])--jump to tag def in new window; g]--list all def and select jump; gl--jump to reference
 
 * */#--go next/previous of the world under the cursor cursor; g*/#--search the word under cursor in forward/backward
+
+## file & tab
+
+* :e %:h/appcode.c
 
 ## search
 
@@ -150,6 +152,7 @@ sudo apt install snapd
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 sudo dpkg -i bat_0.20.0_amd64.deb
+chsh -s $(which zsh)
 ```
 
 ### macos install
@@ -158,6 +161,8 @@ brew install fzf
 
 # To install useful key bindings and fuzzy completion:
 $(brew --prefix)/opt/fzf/install
+# vim use fzf 
+set rtp+=/opt/homebrew/opt/fzf
 brew install bat
 ```
 * fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
