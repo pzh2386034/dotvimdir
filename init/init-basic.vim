@@ -22,6 +22,8 @@ nnoremap #4 :gg"+yG
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 nnoremap ,<space> i<space><esc>
+nnoremap cw :w<CR>
+nnoremap ce :q<CR>
 let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
 set paste
 vnoremap <C-c> "*y

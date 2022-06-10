@@ -143,6 +143,7 @@ endfunc
 
 noremap cc :<C-U><C-R>=printf("AsyncRun %s", Bitbake_compile())<CR>
 noremap cC :<C-U><C-R>=printf("AsyncRun!  %s", Bitbake_compile())<CR>
+noremap cp :<C-U><C-R>=printf("!scp  %s/oe-workdir/package/usr", Findroot(1))<CR>
 " ===================== asyncrun ===========================
 " 自动打开 quickfix window ，高度为 6
 let g:asyncrun_open = 6
