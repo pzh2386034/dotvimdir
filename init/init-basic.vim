@@ -24,6 +24,10 @@ set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 nnoremap ,<space> i<space><esc>
 nnoremap cw :w<CR>
 nnoremap ce :q<CR>
+" 设置 F10 打开/关闭 Quickfix 窗口
+nnoremap co :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap ci :only<cr>
+nnoremap cu :bd<cr>
 let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
 set paste
 vnoremap <C-c> "*y
@@ -42,6 +46,9 @@ nnoremap ,h <C-W>h
 nnoremap ,l <C-W>l
 nnoremap ,j <C-W>j
 nnoremap ,k <C-W>k
+
+nnoremap mf <C-F>
+nnoremap mb <C-U>
 
 nnoremap rl :vertical resize -10<CR>
 nnoremap rh :vertical resize +10<CR>
