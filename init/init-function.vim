@@ -79,21 +79,25 @@ endfunc
 " noremap cc :<C-U><C-R>=printf("AsyncRun %s", Bitbake_compile())<CR>
 noremap cc :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-    exec "w"
     let bb = getenv('BBPATH')
     if &filetype == 'c'
         if bb == v:null
             exec "!g++ % -o %<"
             exec "!time ./%<"
         else
-            exec "echo printf('AsyncRun %s', Bitbake_compile())"
+            let commdfmt = 'AsyncRun %s'
+            let command = printf(commdfmt, Bitbake_compile())
+            exec command
         endif
     elseif &filetype == 'cpp'
         if bb == v:null
             exec "!g++ % -o %<"
             exec "!time ./%<"
         else
-            exec "echo printf('AsyncRun %s', Bitbake_compile())"
+            let commdfmt = 'AsyncRun %s'
+            let command = printf(commdfmt, Bitbake_compile())
+            echom command
+            exec command
         endif
 
     elseif &filetype == 'java'
