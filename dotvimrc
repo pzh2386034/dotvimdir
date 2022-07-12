@@ -133,16 +133,8 @@ if !isdirectory(s:vim_tags)
 	silent! call mkdir(s:vim_tags, 'p')
 endif
 
-function! Bitbake_compile()
-	let command_fmt = 'bitbake %s'
-	let initial_command = Findroot(1)
-	let  module = escape(fnamemodify(initial_command, ':t'), ' ')
-	let command = printf(command_fmt, module)
-	return command
-endfunc
 " command! -bang -nargs=*  Srg call RipgrepFzfself(<q-args>, <bang>0)
 
-noremap cc :<C-U><C-R>=printf("AsyncRun %s", Bitbake_compile())<CR>
 noremap cC :<C-U><C-R>=printf("AsyncRun!  %s", Bitbake_compile())<CR>
 noremap cp :<C-U><C-R>=printf("!scp  %s/oe-workdir/package/usr", Findroot(1))<CR>
 " ===================== asyncrun ===========================
@@ -428,7 +420,14 @@ nnoremap cf :Autoformat<CR>
 autocmd FileType not c,cpp,objc nnoremap <buffer>cf :<C-u>ClangFormat<CR>
 autocmd FileType not c,cpp,objc vnoremap <buffer>cf :ClangFormat<CR>
 "=======================autoformat end=======================
+"=======================python begin=======================
+au Filetype python set fileformat=unix
+autocmd Filetype python set foldmethod=indent
+autocmd Filetype python set foldlevel=99
+"=======================python end=======================
 noremap gt :G<cr>
+map <F5> :call CompileRunGcc()<CR>
+
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>
 inoremap <c-e> <end>
