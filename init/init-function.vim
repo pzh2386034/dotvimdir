@@ -80,6 +80,7 @@ endfunc
 noremap cc :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     let bb = getenv('BBPATH')
+    echom "=================e"
     if &filetype == 'c'
         if bb == v:null
             exec "!g++ % -o %<"
@@ -96,7 +97,6 @@ func! CompileRunGcc()
         else
             let commdfmt = 'AsyncRun %s'
             let command = printf(commdfmt, Bitbake_compile())
-            echom command
             exec command
         endif
 
@@ -109,12 +109,24 @@ func! CompileRunGcc()
         exec "!clear"
         exec "!time python3 %"
     elseif &filetype == 'html'
-        exec "!firefox % &"
+        if bb == v:null
+            exec "!firefox % &"
+        else
+            let commdfmt = 'AsyncRun %s'
+            let command = printf(commdfmt, Bitbake_compile())
+            exec command
+        endif
     elseif &filetype == 'go'
         exec "!go build %<"
         exec "!time go run %"
     elseif &filetype == 'mkd'
         exec "!~/.vim/markdown.pl % > %.html &"
         exec "!firefox %.html &"
+    elseif &filetype == 'javascript'
+        let commdfmt = 'AsyncRun %s'
+        let command = printf(commdfmt, Bitbake_compile())
+        exec command
+    else
+        echom "unknow filetype"
     endif
 endfunc

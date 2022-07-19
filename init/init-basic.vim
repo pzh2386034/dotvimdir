@@ -48,7 +48,7 @@ nnoremap ,j <C-W>j
 nnoremap ,k <C-W>k
 
 nnoremap mf <C-F>
-nnoremap mb <C-U>
+nnoremap md <C-U>
 
 nnoremap rl :vertical resize -10<CR>
 nnoremap rh :vertical resize +10<CR>
