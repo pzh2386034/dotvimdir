@@ -167,3 +167,15 @@ brew install bat
 ```
 * fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
 
+## forgit
+
+### keymap
+
+* gsw->git stash; gsx->git stash drop; gsa->git stash pop; gss->git stash
+* gst->git status
+* gshow/glo->git log 
+* gsd->git diff; ga->选择git diff文件
+* grb->git rebase
+* gcb/o/f/t->git checkout branch/commit/file/tag; gbd->git branch -D
+* grh->git reset; grc->git revert commit
+* gclean->删除文件
