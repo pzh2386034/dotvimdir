@@ -420,6 +420,10 @@ nmap <Leader>C :ClangFormatAutoToggle<CR>
 nnoremap cf :Autoformat<CR>
 autocmd FileType not c,cpp,objc nnoremap <buffer>cf :<C-u>ClangFormat<CR>
 autocmd FileType not c,cpp,objc vnoremap <buffer>cf :ClangFormat<CR>
+autocmd FileType html nnoremap <buffer>cf :!tidy -mi -html -wrap 0 %<CR>
+autocmd FileType html vnoremap <buffer>cf :!tidy -mi -html -wrap 0 %<CR>
+autocmd FileType xml nnoremap <buffer>cf :!tidy -mi -xml -wrap 0 %<CR>
+autocmd FileType xml vnoremap <buffer>cf :!tidy -mi -xml -wrap 0 %<CR>
 "=======================autoformat end=======================
 "=======================python begin=======================
 au Filetype python set fileformat=unix
