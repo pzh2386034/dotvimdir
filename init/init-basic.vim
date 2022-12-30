@@ -29,7 +29,7 @@ nnoremap co :call asyncrun#quickfix_toggle(6)<cr>
 nnoremap ci :only<cr>
 nnoremap cu :bd<cr>
 let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
-set paste
+" set paste
 vnoremap <C-c> "*y
 nnoremap ,v    "*p
 " <C-R>--Ctrl-R;

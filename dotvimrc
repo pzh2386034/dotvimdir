@@ -23,10 +23,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
 Plug 'rhysd/vim-clang-format'
-
+Plug 'honza/vim-snippets'
 " Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
+Plug 'SirVer/ultisnips' 
 " Using a non-default branch
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
@@ -199,12 +198,16 @@ nnoremap gl :YcmCompleter GoToReferences<CR>
 nnoremap gc :YcmCompleter GoToCallers<CR>
 set completeopt=menu,menuone
 
+let g:ycm_complete_in_comments = 1 
+let g:ycm_seed_identifiers_with_syntax = 1 
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 
 noremap <c-z> <NOP>
 
-let g:ycm_semantic_triggers =  {
-			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
+" 该功能和ultisnip有冲突，先注释
+"let g:ycm_semantic_triggers =  {
+            "\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+            "\ 'cs,lua,javascript': ['re!\w{2}'],
+            "\ }
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
 "----------------------------------------------------------------------
@@ -278,9 +281,20 @@ let g:vrc_curl_opts = {
 			\}
 " =======================vim-rest-console end=======================
 " =======================ultisnips===========================
-
-let g:UltiSnipsExpandTrigger="<nop>"
+"set paste:Turning on that setting disables key mappings in the insert mode. Try to
+"remove that setting
+"let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+"let g:ycm_key_list_accept_completion = ['<C-y>']
+let g:UltiSnipsSnippetDirectories = ["mysnips", "UltiSnips"]
+" let g:UltiSnipsSnippetsDir        = $HOME.'/dotvimdir/ultisnips/'
+"let g:UltiSnipsSnippetsDir='~/.vim/plugged/vim-snippets/UltiSnips'
+noremap ,u :UltiSnipsEdit<cr>
+let g:UltiSnipsExpandTrigger="<S-t>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:ulti_expand_or_jump_res = 0
+
 function! <SID>ExpandSnippetOrReturn()
 	let snippet = UltiSnips#ExpandSnippetOrJump()
 	if g:ulti_expand_or_jump_res > 0

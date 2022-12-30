@@ -13,6 +13,7 @@ echo "alias vim="/usr/local/bin/vim""
 python3 install.py [--system-libclang] --clang-completer #only support c/c++ complete(--all for all)
 cd /ycm/pluggin/dir
 python3 install.py
+升级版本后，需要重新执行python3 install.py
 ```
 
 "The ycmd server shut down":need to install ycm
