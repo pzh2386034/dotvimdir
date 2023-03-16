@@ -130,3 +130,27 @@ func! CompileRunGcc()
         echom "unknow filetype"
     endif
 endfunc
+" Define a custom command to run vimgrep and add the results to the quickfix
+command! -nargs=+ -complete=file Gall call s:run_grep("<args>", 0)
+command! -nargs=+ -complete=file Gbuf call s:run_grep("<args>", 1)
+
+function! s:run_grep(pattern, search_buffer)
+    " Save the current position in the jup list
+    let l:old_pos = getpos(".")
+    "
+    " Run vimgrep with the specified pattern and add the results to the
+    " quickfix
+    let l:cmd = "vimgrep /" . escape(a:pattern, "/\\") . "/g"
+    if a:search_buffer
+        let l:cmd .= " %"
+    else
+        let l:cmd .= " **/*"
+    endif
+    try
+        execute l:cmd . " | copen"
+    catch /E480:/
+        " Ignore the error message that appears when no matches are found
+    endtry
+    " Restore the original position in the jump list
+    call setpos(".", l:old_pos)
+endfunction

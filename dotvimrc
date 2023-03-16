@@ -447,6 +447,8 @@ autocmd Filetype python set foldlevel=99
 noremap gt :G<cr>
 map <F5> :call CompileRunGcc()<CR>
 
+nnoremap <leader>g :Gbuf
+nnoremap <leader>G :Gall
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>
 inoremap <c-e> <end>

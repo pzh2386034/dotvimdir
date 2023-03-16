@@ -14,6 +14,8 @@
 " 基础设置
 "----------------------------------------------------------------------
 "
+" set leader key \
+let mapleader = "\\"
 " custom mapping
 nnoremap #2 : w<CR>
 nnoremap #3 : ggdG
@@ -28,6 +30,10 @@ nnoremap ce :q<CR>
 nnoremap co :call asyncrun#quickfix_toggle(6)<cr>
 nnoremap ci :only<cr>
 nnoremap cu :bd<cr>
+" 设置quickfix 快捷键
+nnoremap cn :cn<CR>
+nnoremap cm :cp<CR>
+
 let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
 " set paste
 vnoremap <C-c> "*y
