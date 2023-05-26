@@ -108,7 +108,7 @@ func! CompileRunGcc()
     elseif &filetype == 'python'
         exec "!clear"
         exec "!time python3 %"
-    elseif &filetype == 'html'
+    elseif &filetype == 'html' || &filetype == 'vue'
         if bb == v:null
             exec "!firefox % &"
         else

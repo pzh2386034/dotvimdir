@@ -103,6 +103,7 @@ Plug 'pangloss/vim-javascript' "; maksimr/vim-jsbeautify
 " Plug 'christoomey/vim-tmux-navigator' "vim tmux导航
 " Initialize plugin system
 Plug 'vim-autoformat/vim-autoformat'
+Plug 'leafOfTree/vim-vue-plugin'
 call plug#end()
 autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType java,c,cpp,hpp,h set commentstring=//\ %s
@@ -422,6 +423,19 @@ let g:clang_format#style_options = {
 			\ "AlwaysBreakTemplateDeclarations" : "true",
 			\ "Standard" : "C++11"}
 
+let g:vim_vue_plugin_config = { 
+      \'syntax': {
+      \   'template': ['html'],
+      \   'script': ['javascript'],
+      \   'style': ['css'],
+      \},
+      \'full_syntax': [],
+      \'initial_indent': [],
+      \'attribute': 0,
+      \'keyword': 0,
+      \'foldexpr': 0,
+      \'debug': 0,
+      \}
 " map to <Leader>cf in C++ code
 autocmd FileType c,cpp,objc nnoremap <buffer>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer>cf :ClangFormat<CR>
