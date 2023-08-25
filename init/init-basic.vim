@@ -35,7 +35,8 @@ nnoremap cn :cn<CR>
 nnoremap cm :cp<CR>
 
 let g:utl_cfg_hdl_scm_http = "silent !open -a Safari '%u'"
-" set paste
+nnoremap <C-g> :echo expand('%:p')<CR>
+set paste
 vnoremap <C-c> "*y
 nnoremap ,v    "*p
 " <C-R>--Ctrl-R;
