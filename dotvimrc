@@ -104,6 +104,7 @@ Plug 'pangloss/vim-javascript' "; maksimr/vim-jsbeautify
 " Initialize plugin system
 Plug 'vim-autoformat/vim-autoformat'
 Plug 'leafOfTree/vim-vue-plugin'
+Plug 'sbdchd/neoformat'
 call plug#end()
 autocmd FileType apache setlocal commentstring=#\ %s
 autocmd FileType java,c,cpp,hpp,h set commentstring=//\ %s
@@ -457,12 +458,16 @@ autocmd FileType xml vnoremap <buffer>cf :!tidy -mi -xml -wrap 0 %<CR>
 au Filetype python set fileformat=unix
 autocmd Filetype python set foldmethod=indent
 autocmd Filetype python set foldlevel=99
+
+au BufNewFile,BufRead *.vue set filetype=html
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 
 "=======================python end=======================
 noremap gt :G<cr>
 map <F5> :call CompileRunGcc()<CR>
 
-nnoremap <leader>g :Gbuf
-nnoremap <leader>G :Gall
+nnoremap <leader>g :Gbuf 
+nnoremap <leader>G :Gall 
 " autocmd VimEnter * edit ~/org/test.org
 inoremap <c-b> <home>
 inoremap <c-e> <end>

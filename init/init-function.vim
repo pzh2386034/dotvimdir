@@ -140,7 +140,8 @@ function! s:run_grep(pattern, search_buffer)
     "
     " Run vimgrep with the specified pattern and add the results to the
     " quickfix
-    let l:cmd = "vimgrep /" . escape(a:pattern, "/\\") . "/g"
+    " 使用-j参数避免搜索后自动跳到第一个结果
+    let l:cmd = "vimgrep /" . escape(a:pattern, "/\\") . "/j"
     if a:search_buffer
         let l:cmd .= " %"
     else
