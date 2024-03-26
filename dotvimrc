@@ -112,9 +112,6 @@ autocmd FileType python,shell,coffee set commentstring=#\ %s
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
 
-
-
-
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
 
@@ -128,11 +125,17 @@ let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--langmap=c++:+.cxx']
 
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_new = 1
 " ctags -R  --c++-kinds=+px --fields=+niazS --extra=+q --c-kinds=+px
 " 检测 ~/.cache/tags 不存就新建
 if !isdirectory(s:vim_tags)
 	silent! call mkdir(s:vim_tags, 'p')
 endif
+
+au FileType {c,cpp,h,py} au BufWritePost silent ! [ -e tags ] &&
+\ ( awk -F'\t' '$2\!="%:gs/'/'\''/"{print}' tags ; ctags -f- '%:gs/'/'\''/' )
+\ | sort -t$'\t' -k1,1 -o tags.new && mv tags.new tags
 
 " command! -bang -nargs=*  Srg call RipgrepFzfself(<q-args>, <bang>0)
 
