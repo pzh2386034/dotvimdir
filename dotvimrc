@@ -197,6 +197,7 @@ hi! SpellRare gui=undercurl guisp=magenta
 let g:ycm_auto_hover=''
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_show_diagnostics_ui = 0
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_server_log_level = 'info'
 let g:ycm_min_num_identifier_candidate_chars = 2
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
@@ -490,3 +491,6 @@ cnoremap <c-f> <c-d>
 cnoremap <c-b> <left>
 cnoremap <c-d> <del>
 cnoremap <c-_> <c-k>
+" stock_watch 自选股行情插件（~/.vim/plugin -> dotvimdir/plugin 自动加载）
+let g:stock_watch_repo = '~/wks/quant_and_data/stock-data'
+"let g:stock_watch_vol_source = 'tushare'   " 白天本地库常被日更锁住，建议用 tushare

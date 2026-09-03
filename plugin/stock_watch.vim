@@ -1,0 +1,1 @@
+/Users/panzeus/wks/quant_and_data/stock-data/tools/vim/plugin/stock_watch.vim
